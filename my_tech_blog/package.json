@@ -17,6 +17,7 @@
     "gatsby-plugin-sharp": "^2.6.37",
     "gatsby-plugin-typescript": "^2.4.21",
     "gatsby-source-filesystem": "^2.3.31",
+    "gatsby-transformer-remark": "^2.8.37",
     "gatsby-transformer-sharp": "^2.5.16",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",

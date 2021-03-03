@@ -5,30 +5,80 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 const IndexPage = ({ data }: any) => {
-  console.log(data.markdownRemark)
-  console.log(data.markdownRemark.html)
+  /* console.log(data) */
   return (
     <Layout>
       <SEO title="Home" />
-      <h1>Hi people</h1>
-      <p>Welcome to your new Gatsby site.</p>
-      <p>Now go build something great.</p>
-      <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-        {/* <Image /> */}
-      </div>
-      <Link to="/page-2/">Go to page 2</Link> <br />
-      <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
-        <div dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }} />
+      {data.allMarkdownRemark.edges.map((file: any, index: number) => {
+       return(
+         <div key={index}>
+           <p>
+            {file.node.frontmatter.title ? 
+              <Link
+                to={`/article/${file.node.frontmatter.date}`}
+                state={{title: file.node.frontmatter.title}}
+              >
+                {file.node.frontmatter.title}
+              </Link>
+              :
+              <span>
+                タイトルなし
+              </span>
+            }
+            </p>
+            <p>
+              {file.node.frontmatter.tag ?
+                <span>
+                  {file.node.frontmatter.tag}
+                </span>
+                :
+                <span>
+                  未分類
+                </span>
+              }
+            </p>
+            <p>
+              {file.node.frontmatter.date ?
+               <span>
+                 {file.node.frontmatter.date}
+                </span>
+                :
+                <span>
+                  日付なし
+                </span>
+              }
+            </p>
+          <hr/>
+         </div>
+      )
+      })}
     </Layout>
   )
 }
 
 export default IndexPage
 
+
 export const query = graphql`
-  query Markdown{
-    markdownRemark {
-      html
+  query MarkdownList{
+    allMarkdownRemark (
+      sort: {fields: frontmatter___date}
+    ){
+      edges {
+        node {
+          html
+          headings {
+            depth
+            value
+          }
+          frontmatter {
+            # Assumes you're using title in your frontmatter.
+            title,
+            date,
+            tag
+          }
+        }
+      }
     }
   }
 `

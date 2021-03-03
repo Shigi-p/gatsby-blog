@@ -8,7 +8,7 @@ if __name__ == "__main__":
     args = sys.argv
     try:
         if args[1] == 'format':
-            subprocess.run('./make_summary_format.sh')
+            subprocess.run('summary_format')
             data = subprocess.Popen(['date', '+%Y%m%d'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             print(f'{data.stdout.read().decode()[:-2]}.mdを作成しました')
         elif args[1] == 'create':

@@ -1,0 +1,65 @@
+---
+title: TSにてString型のArrayをリテラル型にするヤツが謎だった
+date: 2021-06-30
+tags:
+  - 技術
+bannar: ./book_nikkichou_diary.png
+---
+
+## ことの発端
+
+```typescript
+type inputType = ["name", "age", "hobby"][number];
+```
+
+的な記述を見つける。
+
+**なんだこの[number]は………**
+
+### ことの経緯
+
+あるコンポーネントに対して、`type`を渡して子コンポーネントで分岐させたいなと思い、
+
+```typescript
+interface props {
+  type?: "name" | "age" | "hobby";
+}
+```
+
+で、受け取って分岐させたのだけど、コードレビューで「型をより強固にしよう」的なアドバイスをもらい上記の記述を教えてもらった。
+………なんだこれ！
+
+曰く、type で`"name" | "age" | "hobby"`みたいな形ができないらしく、それをうまことしてくれているのが`[number]`なんだと。
+
+我々はその謎を解明すべく、アマゾンの奥地へ向かわず Google 検索を繰り返した。
+
+### 参考記事
+
+参考記事というかもはやそのままなんですが
+
+[タプル型 T において、なぜ T[number] は Union 型になるのかに関する考察](https://zenn.dev/luvmini511/articles/d89b3ad241e544)
+
+### あやふや TS メモ理解
+
+```typescript
+type inputType = ["name", "age", "hobby"];
+```
+
+こいつは実質
+
+```typescript
+interface inputType {
+  length: 3;
+  0: "name";
+  1: "age";
+  2: "hobby";
+}
+```
+
+という存在らしく、object なのだがデフォで 0,1,2 とインデックスされているので`type name = inputType[1]`みたいなことができる？(ts あやふやなので)
+
+なので当然`"name" | "age" | "hobby"`のユニオン型とは別人、`[number]`をつけてあげることで………ことで……？
+
+正直なところ、記事見てもそんなに理解できてはいないんだがインデックシングへ number を指定することでうまいことループ処理かなにかで結果的にユニオン型になっているらしい。
+
+未来の僕はこの記事を見て「アホだな〜」と思えるくらいに成長していてほしい。

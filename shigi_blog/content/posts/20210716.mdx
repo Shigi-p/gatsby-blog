@@ -1,0 +1,103 @@
+---
+title: safariのtransitionと戦う
+date: 2021-07-16
+tags:
+  - 技術
+bannar: ./book_nikkichou_diary.png
+---
+
+## ことの発端
+
+```html
+<div class="image__wrapper">
+  <div class="iamge__inner">
+    <img ...>
+  </div>
+</div>
+```
+
+```css
+.image__wrapper {
+  border-radius: 15px;
+  height: 300px;
+  overflow: hidden;
+  width: 400px;
+
+  &:hover {
+    .image__inner {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.image__inner {
+  transition: .5s;
+}
+```
+
+|ホバー前|ホバー後|
+|:-:|:-:|
+| ![ホバー前](./img/20210716_img01.png 'ホバー前') | ![ホバー後](./img/20210716_img02.png 'ホバー後') |
+
+(画像だとちょっとわかりづらいけど)こんな感じでホバーしたら枠は変わらずに画像が内側でふわっと大きくなるアニメーションを作ろうとした。
+
+しかしsafariくんではtransition中にborder-radiusが効かなくなってしまう謎不具合があったのである。
+
+## 解決方法
+
+- `z-index`を指定する
+- `will-change: transform`を指定する
+
+### z-indexを指定する
+
+`overflow: hidden`を指定した要素に`z-index: n`をつける。
+
+これは多分`transform: scale(1.5)`が効いているときにz-indexが無視される現象とかと一緒な気がしている。
+
+内側のimage\__innerに`transform`が効くことでDOM的に上にあるはずの要素image\__wrapperの`border-radius`が無視されてしまうので。一番上の親要素に`z-index`を指定してあげることでそれを防ぐ的な。
+
+でも気軽にz-indexをこねこねするのはちょっと怖い感じがする。次の修正方法のほうが他に及ぼす影響が少なくて済みそう。
+
+### will-change: transformを指定する
+
+`will-change`とは。
+
+前もって「これ変更するからな！！！」ってブラウザに伝えておくらしい。そのままだね。
+
+これを指定したほうが`z-index`より影響が少なさそう…
+
+というより**、スタックコンテキスト**について調べたほうが良い気がしてきた。
+
+## スタックコンテキストとは
+
+いままでふわっとしか理解してなかったけど
+
+「イラストのレイヤーみたいな感じで、一定の要素の中でz-indexを変更してもそれより上の要素には影響を与えない」
+
+みたいな感じだった…
+
+参考記事より。
+
+> 重ね合わせコンテキストは以下のような場面で、文書の随所に様々な要素によって構成されます。
+
+一部抜粋。
+
+> - position の値が absolute または relative であり、かつ z-index の値が auto 以外の要素
+> - position の値が fixed または sticky の要素 (sticky はすべてのモバイルブラウザーにありますが、古いデスクトップブラウザーにはありません)。
+> - フレックス (flexbox (en-US)) コンテナーの子であり、 z-index の値が auto 以外の要素。
+> - opacity の値が 1 未満である要素 (不透明度の仕様をご覧ください)。
+> - will-change の値が、初期値以外で重ね合わせコンテキストを作成する任意のプロパティを指定している要素 (この記事を参照)。
+
+(個人的に)多くぶつかるパターンがこのへんな気がする。基本的に`z-index`の値をこねこねしたり`position: fixed`とか重なり順をこねこねしたときにスタックコンテキストが形成されるらしい。
+
+これらをしたときに、内部で`z-index`をいくらいじろうがそれを超える親要素には影響ない的な…？いやちょっと説明難しいわこれ。未来の僕はこれを見て納得できるくらい成長してください。
+
+## 参考記事
+
+- [iOSでCSSでborder-radius と overflow:hiddenを指定した、角丸マスクが効かなくてハマった話 | MONOCHROME DESIGN｜東京杉並のフリーランスWEBデザイナー。WordPressホームページ/ウェブサイト制作](https://monochrome-design.jp/blog/806)
+- [will-change - CSS: カスケーディングスタイルシート | MDN](https://developer.mozilla.org/ja/docs/Web/CSS/will-change)
+- [CSS will-changeプロパティについて知っておくべきこと | POSTD](https://postd.cc/css-will-change-property/)
+- [重ね合わせコンテキスト - CSS: カスケーディングスタイルシート | MDN](https://developer.mozilla.org/ja/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context)
+- [[CSS] z-index とスタックコンテキスト - Qiita](https://qiita.com/hoto17296/items/42e62989193504d512c7)
+
+以上。

@@ -9,7 +9,7 @@ module.exports = {
     siteTitleAlt: `Shigi blog`,
     siteLanguage: `jp`,
     siteUrl: `https://shigiblog.gatsbyjs.io/`,
-    description: `日記です。`
+    description: `日記です。`,
   },
   flags: {
     FAST_DEV: true,

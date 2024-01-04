@@ -1,0 +1,8 @@
+{
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "markdown.extension.toc.levels": "2..6",
+  "markdown.extension.tableFormatter.normalizeIndentation": true,
+  "markdown.extension.tableFormatter.enabled": true
+}

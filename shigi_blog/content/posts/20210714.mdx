@@ -8,29 +8,29 @@ banner: ./book_nikkichou_diary.png
 
 ## ことの発端
 
-`<input type='date'>`をいじくりまわす日があり、さてcssでごちゃごちゃやるかと思ったらけっこう面倒そうだった。
+`<input type='date'>`をいじくりまわす日があり、さて css でごちゃごちゃやるかと思ったらけっこう面倒そうだった。
 
-## input徹底解剖
+## input 徹底解剖
 
-### GoogleChromeデフォルトのinput
+### GoogleChrome デフォルトの input
 
 ```html:index.html
 <input type="date">
 ```
 
-![GoogleChromeデフォルトの<input type='date'>](./img/20210714_img01.png 'GoogleChromeデフォルトのinput')
+![GoogleChromeデフォルトの<input type='date'>](./img/20210714_img01.png "GoogleChromeデフォルトのinput")
 
 普通ですね。
 
 ### どかっと全体を見る
 
-GoogleChromeのDeveloperToolsのSettingsの中にある、`Show user agent shadow DOM`をTrueにしinputの中を見ていく。
+GoogleChrome の DeveloperTools の Settings の中にある、`Show user agent shadow DOM`を True にし input の中を見ていく。
 
 ```html
 <input type="date">
   <div pseudo="-webkit-datetime-edit" id="date-time-edit" datetimeformat="y/MM/dd">
     <div pseudo="-webkit-datetime-edit-fields-wrapper">
-      <span role="spinbutton" aria-placeholder=" 年 " aria-valuemin="1" aria-valuemax="275760" aria-label="年" pseudo="-webkit-datetime-edit-year-field"> 
+      <span role="spinbutton" aria-placeholder=" 年 " aria-valuemin="1" aria-valuemax="275760" aria-label="年" pseudo="-webkit-datetime-edit-year-field">
         年
       </span>
       <div pseudo="-webkit-datetime-edit-text">
@@ -52,9 +52,9 @@ GoogleChromeのDeveloperToolsのSettingsの中にある、`Show user agent shado
 </input>
 ```
 
-### 1つずつ見ていく
+### 1 つずつ見ていく
 
-#### input要素
+#### input 要素
 
 ```html
 <input type="date">
@@ -74,26 +74,29 @@ input[type="date" i] {
 }
 ```
 
-![input data](./img/20210714_img02.png 'input data')
+![input data](./img/20210714_img02.png "input data")
 
-中の要素が2つあり、`display: -webkit-inline-flex`で横並びになっている。
+中の要素が 2 つあり、`display: -webkit-inline-flex`で横並びになっている。
 
-####  input内部の2つのdiv
+#### input 内部の 2 つの div
 
 ```html
-<div pseudo="-webkit-datetime-edit" id="date-time-edit" datetimeformat="y/MM/dd">
+<div
+  pseudo="-webkit-datetime-edit"
+  id="date-time-edit"
+  datetimeformat="y/MM/dd"
+>
   ...
 </div>
-<div pseudo="-webkit-calendar-picker-indicator" id="picker">
-  ...
-</div>
+<div pseudo="-webkit-calendar-picker-indicator" id="picker">...</div>
 ```
-それぞれのdiv要素は
+
+それぞれの div 要素は
 
 - 「年」「月」「日」の日付選択部分(それぞれクリッカブルで、クリック後数字を入力可能)
-- calenderアイコン(クリッカブルで、ブラウザ標準の日付選択のやつが出てくる)
+- calender アイコン(クリッカブルで、ブラウザ標準の日付選択のやつが出てくる)
 
-ってな感じ。div要素っぽいけどcssをいじくりまわすときにはinputの疑似要素的な感じになるのがなんか不思議なところ。
+ってな感じ。div 要素っぽいけど css をいじくりまわすときには input の疑似要素的な感じになるのがなんか不思議なところ。
 
 ##### -webkit-datetime-edit
 
@@ -113,7 +116,10 @@ input::-webkit-datetime-edit {
 
 ```css
 input[type="date" i]::-webkit-calendar-picker-indicator {
-  background-image: -internal-light-dark(-webkit-image-set(url("...") 1x), -webkit-image-set(url("...") 1x));
+  background-image: -internal-light-dark(
+    -webkit-image-set(url("...") 1x),
+    -webkit-image-set(url("...") 1x)
+  );
   background-origin: content-box;
   background-size: contain;
   height: 1.2em;
@@ -129,7 +135,7 @@ input[type="date" i]::-webkit-calendar-picker-indicator {
 }
 ```
 
-`background-image`でカレンダーのアイコンが指定されててpaddingが事細かに。
+`background-image`でカレンダーのアイコンが指定されてて padding が事細かに。
 
 この**`opacity: 1`ってなんのためにあるんだろうな…？**
 
@@ -140,21 +146,38 @@ input[type="date" i]::-webkit-calendar-picker-indicator {
 
 ```html
 <div pseudo="-webkit-datetime-edit-fields-wrapper">
-  <span role="spinbutton" aria-placeholder=" 年 " aria-valuemin="1" aria-valuemax="275760" aria-label="年" pseudo="-webkit-datetime-edit-year-field"> 
+  <span
+    role="spinbutton"
+    aria-placeholder=" 年 "
+    aria-valuemin="1"
+    aria-valuemax="275760"
+    aria-label="年"
+    pseudo="-webkit-datetime-edit-year-field"
+  >
     年
   </span>
-  <div pseudo="-webkit-datetime-edit-text">
-    /
-  </div>
-  <span role="spinbutton" aria-placeholder="月" aria-valuemin="1" aria-valuemax="12" aria-label="月" pseudo="-webkit-datetime-edit-month-field">
+  <div pseudo="-webkit-datetime-edit-text">/</div>
+  <span
+    role="spinbutton"
+    aria-placeholder="月"
+    aria-valuemin="1"
+    aria-valuemax="12"
+    aria-label="月"
+    pseudo="-webkit-datetime-edit-month-field"
+  >
     月
   </span>
-  <div pseudo="-webkit-datetime-edit-text">
-    /
-  </div>
-  <span role="spinbutton" aria-placeholder="日" aria-valuemin="1" aria-valuemax="31" aria-label="日" pseudo="-webkit-datetime-edit-day-field">
+  <div pseudo="-webkit-datetime-edit-text">/</div>
+  <span
+    role="spinbutton"
+    aria-placeholder="日"
+    aria-valuemin="1"
+    aria-valuemax="31"
+    aria-label="日"
+    pseudo="-webkit-datetime-edit-day-field"
+  >
     日
-      </span>
+  </span>
 </div>
 ```
 
@@ -167,7 +190,7 @@ input::-webkit-datetime-edit-fields-wrapper {
 }
 ```
 
-![input 年月日](./img/20210714_img03.png 'input 年月日')
+![input 年月日](./img/20210714_img03.png "input 年月日")
 
 年月日が仲良く並んでいる。
 

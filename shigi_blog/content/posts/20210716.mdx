@@ -11,7 +11,7 @@ banner: ./book_nikkichou_diary.png
 ```html
 <div class="image__wrapper">
   <div class="iamge__inner">
-    <img ...>
+    <img ... />
   </div>
 </div>
 ```
@@ -31,34 +31,34 @@ banner: ./book_nikkichou_diary.png
 }
 
 .image__inner {
-  transition: .5s;
+  transition: 0.5s;
 }
 ```
 
-|ホバー前|ホバー後|
-|:-:|:-:|
-| ![ホバー前](./img/20210716_img01.png 'ホバー前') | ![ホバー後](./img/20210716_img02.png 'ホバー後') |
+|                     ホバー前                     |                     ホバー後                     |
+| :----------------------------------------------: | :----------------------------------------------: |
+| ![ホバー前](./img/20210716_img01.png "ホバー前") | ![ホバー後](./img/20210716_img02.png "ホバー後") |
 
 (画像だとちょっとわかりづらいけど)こんな感じでホバーしたら枠は変わらずに画像が内側でふわっと大きくなるアニメーションを作ろうとした。
 
-しかしsafariくんではtransition中にborder-radiusが効かなくなってしまう謎不具合があったのである。
+しかし safari くんでは transition 中に border-radius が効かなくなってしまう謎不具合があったのである。
 
 ## 解決方法
 
 - `z-index`を指定する
 - `will-change: transform`を指定する
 
-### z-indexを指定する
+### z-index を指定する
 
 `overflow: hidden`を指定した要素に`z-index: n`をつける。
 
-これは多分`transform: scale(1.5)`が効いているときにz-indexが無視される現象とかと一緒な気がしている。
+これは多分`transform: scale(1.5)`が効いているときに z-index が無視される現象とかと一緒な気がしている。
 
-内側のimage\__innerに`transform`が効くことでDOM的に上にあるはずの要素image\__wrapperの`border-radius`が無視されてしまうので。一番上の親要素に`z-index`を指定してあげることでそれを防ぐ的な。
+内側の image\_\_inner に`transform`が効くことで DOM 的に上にあるはずの要素 image\_\_wrapper の`border-radius`が無視されてしまうので。一番上の親要素に`z-index`を指定してあげることでそれを防ぐ的な。
 
-でも気軽にz-indexをこねこねするのはちょっと怖い感じがする。次の修正方法のほうが他に及ぼす影響が少なくて済みそう。
+でも気軽に z-index をこねこねするのはちょっと怖い感じがする。次の修正方法のほうが他に及ぼす影響が少なくて済みそう。
 
-### will-change: transformを指定する
+### will-change: transform を指定する
 
 `will-change`とは。
 
@@ -72,7 +72,7 @@ banner: ./book_nikkichou_diary.png
 
 いままでふわっとしか理解してなかったけど
 
-「イラストのレイヤーみたいな感じで、一定の要素の中でz-indexを変更してもそれより上の要素には影響を与えない」
+「イラストのレイヤーみたいな感じで、一定の要素の中で z-index を変更してもそれより上の要素には影響を与えない」
 
 みたいな感じだった…
 
@@ -94,9 +94,9 @@ banner: ./book_nikkichou_diary.png
 
 ## 参考記事
 
-- [iOSでCSSでborder-radius と overflow:hiddenを指定した、角丸マスクが効かなくてハマった話 | MONOCHROME DESIGN｜東京杉並のフリーランスWEBデザイナー。WordPressホームページ/ウェブサイト制作](https://monochrome-design.jp/blog/806)
+- [iOS で CSS で border-radius と overflow:hidden を指定した、角丸マスクが効かなくてハマった話 | MONOCHROME DESIGN ｜東京杉並のフリーランス WEB デザイナー。WordPress ホームページ/ウェブサイト制作](https://monochrome-design.jp/blog/806)
 - [will-change - CSS: カスケーディングスタイルシート | MDN](https://developer.mozilla.org/ja/docs/Web/CSS/will-change)
-- [CSS will-changeプロパティについて知っておくべきこと | POSTD](https://postd.cc/css-will-change-property/)
+- [CSS will-change プロパティについて知っておくべきこと | POSTD](https://postd.cc/css-will-change-property/)
 - [重ね合わせコンテキスト - CSS: カスケーディングスタイルシート | MDN](https://developer.mozilla.org/ja/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context)
 - [[CSS] z-index とスタックコンテキスト - Qiita](https://qiita.com/hoto17296/items/42e62989193504d512c7)
 

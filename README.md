@@ -1,5 +1,5 @@
 # Shigi-blog
 
-[ここ](https://shigiblog.gatsbyjs.io/)
+[ここ](https://shigi-blog.netlify.app/)
 
 日記です

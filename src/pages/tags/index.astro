@@ -1,0 +1,20 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getTagGroups } from "../../lib/tags";
+
+const groups = await getTagGroups();
+---
+
+<BaseLayout title="Tags">
+  <h1 class="page-title">Tags</h1>
+  <ul class="tag-index">
+    {
+      groups.map((group) => (
+        <li>
+          <a href={group.href}>{group.name}</a>
+          <span class="post-meta">{group.posts.length}</span>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

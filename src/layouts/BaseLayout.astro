@@ -38,6 +38,13 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
             >Blog</a
           >
           <a
+            href="/tags"
+            aria-current={currentPath === "/tags" ||
+              currentPath.startsWith("/tags/")
+              ? "page"
+              : undefined}>Tags</a
+          >
+          <a
             href="/about"
             aria-current={currentPath === "/about" ? "page" : undefined}
             >About</a

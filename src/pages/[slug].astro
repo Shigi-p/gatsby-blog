@@ -1,5 +1,6 @@
 ---
 import { render } from "astro:content";
+import PostTags from "../components/PostTags.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getPosts, type Post } from "../lib/permalinks";
 
@@ -39,11 +40,7 @@ const { Content } = await render(post.entry);
       <h1 class="page-title">{post.entry.data.title}</h1>
       <div class="post-meta">
         <time datetime={post.dateStamp}>{post.dateStamp}</time>
-        {
-          post.entry.data.tags.length > 0 && (
-            <span>{post.entry.data.tags.join(", ")}</span>
-          )
-        }
+        <PostTags tags={post.entry.data.tags} />
       </div>
     </header>
     <div class="prose">

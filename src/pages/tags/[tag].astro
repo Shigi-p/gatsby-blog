@@ -1,0 +1,23 @@
+---
+import PostList from "../../components/PostList.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getTagGroups } from "../../lib/tags";
+
+export async function getStaticPaths() {
+  const groups = await getTagGroups();
+
+  return groups.map((group) => ({
+    params: { tag: group.slug },
+    props: { group },
+  }));
+}
+
+const { group } = Astro.props;
+---
+
+<BaseLayout title={group.name}>
+  <p class="tag-back"><a href="/tags">すべてのタグ</a></p>
+  <h1 class="page-title">{group.name}</h1>
+  <p class="post-meta">{group.posts.length} 件</p>
+  <PostList posts={group.posts} />
+</BaseLayout>

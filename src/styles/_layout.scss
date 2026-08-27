@@ -87,6 +87,42 @@
   font-size: 0.9rem;
 }
 
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.post-list .post-tags a,
+.post-tags a {
+  color: var(--color-muted);
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.post-list .post-tags a:hover,
+.post-tags a:hover {
+  color: var(--color-accent);
+}
+
+.tag-index {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tag-index li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.tag-back {
+  margin: 0 0 var(--space-sm);
+  font-size: 0.9rem;
+}
+
 .page-title {
   margin: 0 0 var(--space-lg);
   font-size: 1.75rem;

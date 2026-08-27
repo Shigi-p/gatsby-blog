@@ -21,7 +21,7 @@ slug: "/2024-07-25"
 
 `.scaffdog/commit-template.md` という名称で作成。本当はこれに続いてごちゃごちゃあるのだが長いので省略。
 
-```markdown
+````markdown
 ---
 name: 'component-template'
 root: '.'
@@ -55,8 +55,8 @@ const {{ inputs.componentName | pascal }}: React.FC<{{ inputs.componentName | pa
 };
 
 export default {{ inputs.componentName | pascal }};
-
 ```
+````
 
 
 実際に走らせてみると以下の感じになる。

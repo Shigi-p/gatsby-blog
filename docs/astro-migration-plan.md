@@ -1,9 +1,23 @@
 # Gatsby 3 → Astro 移行計画
 
-この文書は実装ではありません。現状のブログを調べたうえで、記事・URL・画像を残したまま Astro へ移す方針です。実装は「実装してください」と指示されたあとに、小さいステップで進めます。
-
 公開サイト: https://shigi-blog.netlify.app/  
 リポジトリ: https://github.com/Shigi-p/gatsby-blog
+
+## 決めたこと
+
+1. スタイルは自前 CSS。記法は **SCSS**（インデント構文の Sass ではない）
+2. 見た目はライトのみ。色や余白は CSS 変数に出し、ダークは後から `[data-theme="dark"]` を足せるようにする
+3. アクセス解析は入れない（GA4 も不要。個人日記の閲覧数を追う理由が薄い。旧 UA はすでに死んでいる）
+4. 日本語 URL はやめる。日付スラッグ + 連番にする
+5. 新 URL は **`/YYYY-MM-DD-NN`**（同じ日の 1 本目は `-01`。同じ日に増やしても既存 URL を変えなくてよい）
+
+旧 URL からは 301 で新 URL へ飛ばす。本文の `date` を日付の正とする（例: フォルダ名が `20241007` でも frontmatter が `2024-07-26` なら `/2024-07-26-01`）。
+
+## この PR で入れた範囲
+
+記事が新 URL で読め、トップ / Blog / About が開き、旧 URL からリダイレクトされるところまで。
+
+まだ入れてないもの: タグページ、RSS、sitemap、WeeklyMemo の HTML `<img>` の整理、デザインの作り込み、React island。
 
 ---
 
@@ -60,7 +74,7 @@ React を捨てる必要はありません。ヘッダーやダークモード�
 - `content/posts/` の本文・画像・frontmatter
 - `content/pages/about/index.mdx`
 - トップの紹介文（`hero.mdx` の内容）
-- **いま公開されている URL**（後述。検索や被リンクのため最重要）
+- 記事本文・画像・frontmatter。公開 URL は `/YYYY-MM-DD-NN` に揃え、旧 URL は 301 する
 - サイト名 `Shigi blog`、説明「日記です。」、言語 `jp`
 - Netlify への静的デプロイ
 - RSS（`/rss.xml`）と sitemap、favicon 類
@@ -75,6 +89,7 @@ React を捨てる必要はありません。ヘッダーやダークモード�
 ### 捨ててよい
 
 - Gatsby、テーマ、GraphQL、Theme UI、shadowing
+- アクセス解析（GA4 も含め、個人日記では必須ではない）
 - `gatsby-plugin-google-analytics`（Universal Analytics。すでに計測できない）
 - `gatsby-plugin-offline` / PWA manifest（個人ブログでは必須ではない。必要なら後で足す）
 - テーマ同梱のまま残っている LekoArts 由来の文言

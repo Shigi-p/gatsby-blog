@@ -1,0 +1,24 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pages = await getCollection("pages");
+const about = pages.find(
+  (page) =>
+    page.id === "about" ||
+    page.id === "about/index" ||
+    page.data.slug === "/about",
+);
+if (!about) {
+  throw new Error("content/pages/about が見つかりません");
+}
+
+const { Content } = await render(about);
+---
+
+<BaseLayout title={about.data.title}>
+  <h1 class="page-title">{about.data.title}</h1>
+  <div class="prose">
+    <Content />
+  </div>
+</BaseLayout>

@@ -1,0 +1,25 @@
+---
+import type { Post } from "../lib/permalinks";
+
+type Props = {
+  posts: Post[];
+};
+
+const { posts } = Astro.props;
+---
+
+<ul class="post-list">
+  {
+    posts.map((post) => (
+      <li>
+        <a href={post.href}>{post.entry.data.title}</a>
+        <div class="post-meta">
+          <time datetime={post.dateStamp}>{post.dateStamp}</time>
+          {post.entry.data.tags.length > 0 && (
+            <span>{post.entry.data.tags.join(", ")}</span>
+          )}
+        </div>
+      </li>
+    ))
+  }
+</ul>

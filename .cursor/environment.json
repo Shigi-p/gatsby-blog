@@ -1,0 +1,13 @@
+{
+  "name": "Shigi blog (Gatsby)",
+  "install": "export NVM_DIR=\"$HOME/.nvm\" && . \"$NVM_DIR/nvm.sh\" && nvm install v18.17.1 >/dev/null && export PATH=\"$HOME/.nvm/versions/node/v18.17.1/bin:$PATH\" && corepack enable && corepack prepare yarn@1.22.22 --activate && yarn install --frozen-lockfile",
+  "terminals": [
+    {
+      "name": "gatsby-develop",
+      "command": "export PATH=\"$HOME/.nvm/versions/node/v18.17.1/bin:$PATH\" && cd /workspace && GATSBY_TELEMETRY_DISABLED=1 yarn develop -H 0.0.0.0 -p 8000"
+    }
+  ],
+  "ports": [
+    8000
+  ]
+}

@@ -1,0 +1,12 @@
+---
+import PostList from "../components/PostList.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getPostsNewestFirst } from "../lib/permalinks";
+
+const posts = await getPostsNewestFirst();
+---
+
+<BaseLayout title="Blog">
+  <h1 class="page-title">Blog</h1>
+  <PostList posts={posts} />
+</BaseLayout>

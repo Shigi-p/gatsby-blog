@@ -1,0 +1,53 @@
+---
+import { render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getPosts, type Post } from "../lib/permalinks";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+
+  return posts.flatMap((post) => {
+    const canonical = {
+      params: { slug: post.permalink },
+      props: { post, redirectTo: undefined as string | undefined },
+    };
+    const redirects = post.legacySlugs.map((legacySlug) => ({
+      params: { slug: legacySlug },
+      props: { post, redirectTo: post.href },
+    }));
+    return [canonical, ...redirects];
+  });
+}
+
+type Props = {
+  post: Post;
+  redirectTo?: string;
+};
+
+const { post, redirectTo } = Astro.props;
+
+if (redirectTo) {
+  return Astro.redirect(redirectTo, 301);
+}
+
+const { Content } = await render(post.entry);
+---
+
+<BaseLayout title={post.entry.data.title}>
+  <article>
+    <header>
+      <h1 class="page-title">{post.entry.data.title}</h1>
+      <div class="post-meta">
+        <time datetime={post.dateStamp}>{post.dateStamp}</time>
+        {
+          post.entry.data.tags.length > 0 && (
+            <span>{post.entry.data.tags.join(", ")}</span>
+          )
+        }
+      </div>
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

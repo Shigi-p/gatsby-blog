@@ -1,0 +1,55 @@
+---
+import { site } from "../lib/site";
+import "../styles/global.scss";
+
+type Props = {
+  title?: string;
+  description?: string;
+};
+
+const { title, description = site.description } = Astro.props;
+const pageTitle = title ? `${title} | ${site.title}` : site.title;
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<!doctype html>
+<html lang={site.language}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <div class="site">
+      <header class="site-header">
+        <a class="site-title" href="/">{site.title}</a>
+        <nav class="site-nav" aria-label="メイン">
+          <a
+            href="/blog"
+            aria-current={currentPath === "/blog" ? "page" : undefined}
+            >Blog</a
+          >
+          <a
+            href="/about"
+            aria-current={currentPath === "/about" ? "page" : undefined}
+            >About</a
+          >
+        </nav>
+      </header>
+      <main class="site-main">
+        <slot />
+      </main>
+      <footer class="site-footer">
+        © {new Date().getFullYear()} {site.title}
+      </footer>
+    </div>
+  </body>
+</html>

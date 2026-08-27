@@ -1,0 +1,5 @@
+User-agent: *
+
+Allow: /
+
+Sitemap: https://shigi-blog.netlify.app/sitemap-index.xml

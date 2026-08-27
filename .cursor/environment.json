@@ -1,0 +1,17 @@
+{
+  "name": "Shigi blog",
+  "install": "npm ci",
+  "terminals": [
+    {
+      "name": "astro-dev",
+      "command": "npm run dev -- --host 0.0.0.0 --port 4321",
+      "description": "Astro 開発サーバー。ブログのプレビューはポート 4321。"
+    }
+  ],
+  "ports": [
+    {
+      "name": "Astro",
+      "port": 4321
+    }
+  ]
+}

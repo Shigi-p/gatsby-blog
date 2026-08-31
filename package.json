@@ -12,7 +12,8 @@
   "dependencies": {
     "@astrojs/mdx": "^7.0.8",
     "@astrojs/sitemap": "^3.7.3",
-    "astro": "^7.2.8"
+    "astro": "^7.2.8",
+    "astro-pagefind": "^2.0.1"
   },
   "devDependencies": {
     "sass": "^1.103.1",

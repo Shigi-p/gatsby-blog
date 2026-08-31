@@ -17,7 +17,7 @@ const { Content } = await render(about);
 ---
 
 <BaseLayout title={about.data.title}>
-  <div data-pagefind-body>
+  <div data-pagefind-body data-pagefind-meta="url:/about">
     <h1 class="page-title">{about.data.title}</h1>
     <div class="prose">
       <Content />

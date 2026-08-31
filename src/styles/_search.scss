@@ -1,5 +1,5 @@
-// Pagefind Component UI の色をサイトの CSS 変数に寄せる。
-.search-page {
+// Pagefind のモーダルは body 直下に出るので、色は :root に置く。
+:root {
   --pf-text: var(--color-text);
   --pf-text-secondary: var(--color-muted);
   --pf-text-muted: var(--color-muted);
@@ -13,15 +13,35 @@
   --pf-border-radius: var(--radius);
 }
 
-.search-page pagefind-input {
-  display: block;
-  width: 100%;
-  margin-bottom: var(--space-md);
+.site-nav pagefind-modal-trigger {
+  display: inline-flex;
+  align-items: center;
 }
 
-.search-page pagefind-summary {
-  display: block;
-  margin-bottom: var(--space-md);
+// Pagefind のトリガーは検索ボックス見た目がデフォルト。ナビの文字リンクに揃える。
+:is(*, #\#):is(*, #\#):is(*, #\#) .site-nav .pf-trigger-btn {
+  width: auto;
+  height: auto;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  font-size: inherit;
+  font-family: inherit;
   color: var(--color-muted);
-  font-size: 0.9rem;
+  gap: var(--space-xs);
+}
+
+:is(*, #\#):is(*, #\#):is(*, #\#) .site-nav .pf-trigger-btn:hover {
+  border-color: transparent;
+  color: var(--color-text);
+}
+
+:is(*, #\#):is(*, #\#):is(*, #\#) .site-nav .pf-trigger-icon {
+  display: none;
+}
+
+:is(*, #\#):is(*, #\#):is(*, #\#) .site-nav .pf-trigger-text {
+  flex: none;
+  color: inherit;
 }

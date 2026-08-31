@@ -9,7 +9,6 @@ export function isCanonicalSitemapUrl(page: string): boolean {
     path === "/" ||
     path === "/blog" ||
     path === "/about" ||
-    path === "/search" ||
     path === "/tags"
   ) {
     return true;

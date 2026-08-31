@@ -1,4 +1,5 @@
 ---
+import PagefindConfig from "astro-pagefind/components/PagefindConfig.astro";
 import { site } from "../lib/site";
 import "../styles/global.scss";
 
@@ -50,11 +51,9 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
             aria-current={currentPath === "/about" ? "page" : undefined}
             >About</a
           >
-          <a
-            href="/search"
-            aria-current={currentPath === "/search" ? "page" : undefined}
-            >Search</a
-          >
+          <pagefind-modal-trigger
+            placeholder="Search"
+            hide-shortcut></pagefind-modal-trigger>
         </nav>
       </header>
       <main class="site-main">
@@ -64,5 +63,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
         © {new Date().getFullYear()} {site.title}
       </footer>
     </div>
+    <PagefindConfig />
+    <pagefind-modal></pagefind-modal>
   </body>
 </html>

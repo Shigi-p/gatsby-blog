@@ -1,3 +1,7 @@
+# Old Gatsby sitemap path
+/sitemap/sitemap-index.xml /sitemap-index.xml 301
+/sitemap/sitemap-0.xml /sitemap-0.xml 301
+
 # Old Gatsby URLs -> /YYYY-MM-DD-NN
 /0103-weekly-memo /2022-01-03-01 301
 /0110-weekly-memo /2022-01-10-01 301

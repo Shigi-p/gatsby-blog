@@ -1,5 +1,6 @@
 ---
 import type { Post } from "../lib/permalinks";
+import PostTags from "./PostTags.astro";
 
 type Props = {
   posts: Post[];
@@ -15,9 +16,7 @@ const { posts } = Astro.props;
         <a href={post.href}>{post.entry.data.title}</a>
         <div class="post-meta">
           <time datetime={post.dateStamp}>{post.dateStamp}</time>
-          {post.entry.data.tags.length > 0 && (
-            <span>{post.entry.data.tags.join(", ")}</span>
-          )}
+          <PostTags tags={post.entry.data.tags} />
         </div>
       </li>
     ))

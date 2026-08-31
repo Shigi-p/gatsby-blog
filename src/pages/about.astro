@@ -17,8 +17,10 @@ const { Content } = await render(about);
 ---
 
 <BaseLayout title={about.data.title}>
-  <h1 class="page-title">{about.data.title}</h1>
-  <div class="prose">
-    <Content />
+  <div data-pagefind-body>
+    <h1 class="page-title">{about.data.title}</h1>
+    <div class="prose">
+      <Content />
+    </div>
   </div>
 </BaseLayout>

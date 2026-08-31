@@ -50,6 +50,11 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
             aria-current={currentPath === "/about" ? "page" : undefined}
             >About</a
           >
+          <a
+            href="/search"
+            aria-current={currentPath === "/search" ? "page" : undefined}
+            >Search</a
+          >
         </nav>
       </header>
       <main class="site-main">

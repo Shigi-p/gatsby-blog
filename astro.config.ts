@@ -1,5 +1,6 @@
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import pagefind from "astro-pagefind";
 import { defineConfig } from "astro/config";
 import { isCanonicalSitemapUrl } from "./src/lib/sitemap";
 
@@ -16,6 +17,8 @@ export default defineConfig({
         video: false,
       },
     }),
+    // 最後に置く。build 後の HTML をまとめてインデックスする。
+    pagefind(),
   ],
   trailingSlash: "never",
   markdown: {

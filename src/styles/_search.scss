@@ -1,0 +1,27 @@
+// Pagefind Component UI の色をサイトの CSS 変数に寄せる。
+.search-page {
+  --pf-text: var(--color-text);
+  --pf-text-secondary: var(--color-muted);
+  --pf-text-muted: var(--color-muted);
+  --pf-background: var(--color-surface);
+  --pf-border: var(--color-border);
+  --pf-border-focus: var(--color-accent);
+  --pf-hover: var(--color-bg);
+  --pf-mark: var(--color-accent);
+  --pf-outline-focus: var(--color-accent);
+  --pf-font: var(--font-sans);
+  --pf-border-radius: var(--radius);
+}
+
+.search-page pagefind-input {
+  display: block;
+  width: 100%;
+  margin-bottom: var(--space-md);
+}
+
+.search-page pagefind-summary {
+  display: block;
+  margin-bottom: var(--space-md);
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
